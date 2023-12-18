@@ -4,6 +4,6 @@ const { PORT } = require('./constants');
 const app = require('./config/express')();
 
 // Connecting to DB
-const db = require('./config/db');
+const db = require('./config/db')();
 
 app.listen(PORT, () => console.log(`Server is listenting on port ${PORT}...`));
