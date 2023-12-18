@@ -1,11 +1,12 @@
 const express = require('express');
 const cors = require("cors");
 
+const { PORT, DBPATH } = require('./constants');
+
 // Connecting to DB
-const db = require('./config/db');
+const db = require('./config/db')(DBPATH);
 
 const app = express();
-const PORT = 3030;
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
