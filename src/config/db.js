@@ -9,5 +9,17 @@ module.exports = (dbPath) => {
         }
     });
 
+    process.on('SIGINT', () => {
+        db.close((err) => {
+            if (err) {
+                return console.error(err.message);
+            }
+            console.log('Database connection closed.');
+            process.exit(0);
+        });
+    });
+
+    return db;
+
     return db;
 } 
