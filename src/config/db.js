@@ -1,25 +1,23 @@
 const sqlite3 = require('sqlite3').verbose();
+const { DBPATH } = require('../constants');
 
-module.exports = (dbPath) => {
-    const db = new sqlite3.Database(dbPath, (err) => {
+
+const db = new sqlite3.Database(DBPATH, (err) => {
+    if (err) {
+        return console.error(err.message);
+    } else {
+        console.log('Connected to database.');
+    }
+});
+
+process.on('SIGINT', () => {
+    db.close((err) => {
         if (err) {
             return console.error(err.message);
-        } else {
-            console.log('Connected to database.');
         }
+        console.log('Database connection closed.');
+        process.exit(0);
     });
+});
 
-    process.on('SIGINT', () => {
-        db.close((err) => {
-            if (err) {
-                return console.error(err.message);
-            }
-            console.log('Database connection closed.');
-            process.exit(0);
-        });
-    });
-
-    return db;
-
-    return db;
-} 
+module.exports = db;
