@@ -1,16 +1,14 @@
 const sqlite3 = require('sqlite3').verbose();
 const { DBPATH } = require('../constants');
 
-let db = null;
-
 const initializeDatabase = () => {
-        db = new sqlite3.Database(DBPATH, (err) => {
-            if (err) {
-                return console.error(err.message);
-            } else {
-                console.log('Connected to database.');
-            }
-        });
+    const db = new sqlite3.Database(DBPATH, (err) => {
+        if (err) {
+            return console.error(err.message);
+        } else {
+            console.log('Connected to database.');
+        }
+    });
 
     process.on('SIGINT', () => {
         db.close((err) => {
@@ -22,8 +20,10 @@ const initializeDatabase = () => {
             process.exit(0);
         });
     });
-     
+
     return db;
 };
 
-module.exports = db ? db : initializeDatabase();
+let db = initializeDatabase();
+
+module.exports = db;
