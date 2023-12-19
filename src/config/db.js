@@ -3,8 +3,7 @@ const { DBPATH } = require('../constants');
 
 let db = null;
 
-module.exports = () => {
-    if (!db) {
+const initializeDatabase = () => {
         db = new sqlite3.Database(DBPATH, (err) => {
             if (err) {
                 return console.error(err.message);
@@ -12,7 +11,6 @@ module.exports = () => {
                 console.log('Connected to database.');
             }
         });
-    }
 
     process.on('SIGINT', () => {
         db.close((err) => {
@@ -27,3 +25,5 @@ module.exports = () => {
      
     return db;
 };
+
+module.exports = db ? db : initializeDatabase();
