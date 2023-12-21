@@ -32,7 +32,8 @@ const createTables = (db) => {
         CREATE TABLE users (
             id INTEGER PRIMARY KEY,
             username TEXT NOT NULL,
-            email TEXT NOT NULL
+            email TEXT NOT NULL,
+            password TEXT NOT NULL
         )
     `, (err) => {
         if (err) {
