@@ -27,15 +27,14 @@ const initializeDatabase = () => {
 
 const createTables = (db) => {
     db.run(`
-        CREATE TABLE IF NOT EXISTS users (
+        CREATE TABLE users (
             id INTEGER PRIMARY KEY,
             username TEXT NOT NULL,
-            email TEXT NOT NULL,
-            password TEXT NOT NULL
+            email TEXT NOT NULL
         )
     `, (err) => {
         if (err) {
-            console.error('Error creating users table:', err.message);
+            console.error(err.message);
         } else {
             console.log('Users table created.');
         }
