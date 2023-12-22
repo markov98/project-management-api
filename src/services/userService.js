@@ -6,7 +6,7 @@ const db = require('../config/db');
 exports.register = async (username, email, password) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    return new Promise((resolve, reject) => {
+    const user = new Promise((resolve, reject) => {
         db.run(`
             INSERT INTO users (username, email, password)
             VALUES (?, ?, ?)
@@ -14,8 +14,22 @@ exports.register = async (username, email, password) => {
             if (err) {
                 reject(err);
             } else {
-                resolve('Succes!');
+                resolve({id: this.lastID, email});
             }
         });
     });
+
+    return getResult(await user);
 };
+
+function getResult(user) {
+    const payload = { _id: user._id, email: user.email };
+    const token = jwt.sign(payload, "SOME_SECRET", { expiresIn: "1d" });  
+    const result = {
+      _id: user._id,
+      accessToken: token,
+      email: user.email,
+    };
+  
+    return result;
+  }

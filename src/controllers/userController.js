@@ -4,8 +4,8 @@ const userService = require('../services/userService');
 router.post('/register', async (req, res) => {
     try {
         const { username, email, password } = req.body;
-        await userService.register(username, email, password);
-        res.send('Registration Successful!')
+        const result = await userService.register(username, email, password);
+        res.json(result)
     } catch (err) {
         console.log(err);
         res.status(500).json({ error: 'Internal Server Error' });
