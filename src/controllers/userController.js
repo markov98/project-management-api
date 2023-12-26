@@ -8,7 +8,7 @@ router.post('/register', async (req, res) => {
         res.json(result)
     } catch (err) {
         console.log(err);
-        res.status(500).json({ error: 'Internal Server Error' });
+        res.status(500).json({ error: err.message });
     }
 })
 
@@ -19,7 +19,7 @@ router.post('/login', async (req, res) => {
         res.json(result)
     } catch (err) {
         console.log(err);
-        res.status(500).json({ error: 'Internal Server Error' });
+        res.status(500).json({ error: err.massage });
     }
 })
 
