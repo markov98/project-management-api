@@ -1,4 +1,6 @@
 const sqlite3 = require('sqlite3').verbose();
+const util = require('util');
+
 const { DBPATH } = require('../constants');
 
 const initializeDatabase = () => {
@@ -44,6 +46,10 @@ const createTables = (db) => {
     });
 };
 
-let db = initializeDatabase();
-
+const db = initializeDatabase();
+db.asyncRun = util.promisify(db.run);
+db.asyncGet = util.promisify(db.get);
 module.exports = db;
+
+
+
