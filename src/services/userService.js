@@ -22,6 +22,10 @@ exports.register = async (username, email, password) => {
     return getResult(await user);
 };
 
+exports.login = async (email, password) => {
+    
+}
+
 function getResult(user) {
     const payload = { _id: user._id, email: user.email };
     const token = jwt.sign(payload, "SOME_SECRET", { expiresIn: "1d" });  
