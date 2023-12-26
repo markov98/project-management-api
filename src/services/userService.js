@@ -23,7 +23,24 @@ exports.register = async (username, email, password) => {
 };
 
 exports.login = async (email, password) => {
-    
+    const user = await new Promise((resolve, reject) => {
+        db.get('SELECT id, email, username, password FROM users WHERE email = ?', [email], (err, row) => {
+            if (err) reject(err);
+            resolve(row);
+        });
+    });
+
+if (!user) {
+    throw new Error('User not found');
+}
+
+const passwordMatch = await bcrypt.compare(password, user.password);
+
+if (!passwordMatch) {
+    throw new Error('Incorrect password');
+}
+
+return getResult(user);
 }
 
 function getResult(user) {

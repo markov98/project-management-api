@@ -13,7 +13,14 @@ router.post('/register', async (req, res) => {
 })
 
 router.post('/login', async (req, res) => {
-
+    try {
+        const { email, password } = req.body;
+        const result = await userService.login(email, password);
+        res.json(result)
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
 })
 
 
