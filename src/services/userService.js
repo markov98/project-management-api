@@ -6,14 +6,15 @@ const db = require('../config/db');
 exports.register = async (username, email, password) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    await db.asyncRun(`
-            INSERT INTO users (username, email, password)
-            VALUES (?, ?, ?)
-        `, [username, email, hashedPassword]);
+    await db.asyncGet(`
+        INSERT INTO users (username, email, password)
+        VALUES (?, ?, ?)
+    `, [username, email, hashedPassword]);
 
-    const user = { id: this.lastID, email };
+    const { lastId } = await db.asyncGet('SELECT last_insert_rowid() as lastId');
+
+    const user = { id: lastId, email };
     return getResult(user);
-
 };
 
 exports.login = async (email, password) => {
