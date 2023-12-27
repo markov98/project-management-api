@@ -1,5 +1,8 @@
 const router = require("express").Router();
+const jwt = require("jsonwebtoken");
 const userService = require('../services/userService');
+const { SECRET } = require("../constants");
+const { isAuth } = require('../middlewares/authMiddleware');
 
 router.post('/register', async (req, res) => {
     try {
@@ -23,8 +26,13 @@ router.post('/login', async (req, res) => {
     }
 });
 
-router.get("/logout", (req, res) => {
-    res.end();
-  });
+router.get("/logout", isAuth, (req, res) => {
+    if (req.user) {
+        const expiredToken = jwt.sign({ exp: 0 }, SECRET);
+        res.header("X-Authorization", expiredToken);
+    }
+
+    res.status(200).json({ message: "Logout successful" });
+});
 
 module.exports = router;
