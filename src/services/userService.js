@@ -2,6 +2,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 const db = require('../config/db');
+const { SECRET } = require("../constants");
 
 exports.register = async (username, email, password) => {
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -35,7 +36,7 @@ exports.login = async (email, password) => {
 
 function getResult(user) {
     const payload = { _id: user.id, email: user.email };
-    const token = jwt.sign(payload, "SOME_SECRET", { expiresIn: "1d" });
+    const token = jwt.sign(payload, SECRET, { expiresIn: "1d" });
     const result = {
         _id: user.id,
         accessToken: token,
