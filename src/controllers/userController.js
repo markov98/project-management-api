@@ -28,11 +28,11 @@ router.post('/login', async (req, res) => {
 
 router.get("/logout", isAuth, (req, res) => {
     if (req.user) {
-        const expiredToken = jwt.sign({ exp: 0 }, SECRET);
-        res.header("X-Authorization", expiredToken);
+      const expiredToken = jwt.sign({ exp: 0 }, SECRET);    
+      res.header("X-Authorization", expiredToken);
     }
-
+  
     res.status(200).json({ message: "Logout successful" });
-});
+  });
 
 module.exports = router;
