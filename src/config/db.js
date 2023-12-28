@@ -44,6 +44,20 @@ const createTables = (db) => {
             console.log('Users table created.');
         }
     });
+
+    db.run(`
+    CREATE TABLE roles (
+        id INTEGER PRIMARY KEY,
+        role_name TEXT NOT NULL UNIQUE,
+        description TEXT NOT NULL
+    )
+`, (err) => {
+    if (err) {
+        console.error(err.message);
+    } else {
+        console.log('Roles table created.');
+    }
+});
 };
 
 const db = initializeDatabase();
