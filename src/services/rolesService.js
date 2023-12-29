@@ -12,3 +12,10 @@ exports.getAll = async () => {
         SELECT * FROM roles
     `);
 }
+
+exports.getById = async (id) => {
+    return await db.asyncGet(`
+        SELECT * FROM roles
+        WHERE id = ?
+    `, [id]);
+}
