@@ -8,7 +8,7 @@ exports.add = async (roleName, description) => {
 }
 
 exports.getAll = async () => {
-    return await db.asyncGet(`
+    return await db.asyncAll(`
         SELECT * FROM roles
     `);
 }

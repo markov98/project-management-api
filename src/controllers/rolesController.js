@@ -12,4 +12,12 @@ router.post('/add', isAuth, async (req, res) => {
     }
 })
 
+router.get('/get-all', async (req, res) => {
+    try {
+        res.json(await rolesService.getAll());
+    } catch (err) {
+        res.status(404).json(err.message)
+    }
+})
+
 module.exports = router;

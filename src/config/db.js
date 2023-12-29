@@ -63,6 +63,7 @@ const createTables = (db) => {
 const db = initializeDatabase();
 db.asyncRun = util.promisify(db.run);
 db.asyncGet = util.promisify(db.get);
+db.asyncAll = util.promisify(db.all);
 module.exports = db;
 
 
