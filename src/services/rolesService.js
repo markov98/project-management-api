@@ -6,3 +6,9 @@ exports.add = async (roleName, description) => {
     VALUES (?, ?)
 `, [roleName, description]);
 }
+
+exports.getAll = async () => {
+    return await db.asyncGet(`
+        SELECT * FROM roles
+    `);
+}
