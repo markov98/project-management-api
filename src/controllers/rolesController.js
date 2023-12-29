@@ -20,4 +20,13 @@ router.get('/get-all', async (req, res) => {
     }
 })
 
+router.get('/:id', async (req, res) => {
+    try {
+        const { id } = req.params;
+        res.json(await rolesService.getById(id));
+    } catch (err) {
+        res.status(404).json(err.message)
+    }
+})
+
 module.exports = router;
