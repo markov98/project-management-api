@@ -1,7 +1,8 @@
 const router = require("express").Router();
 const rolesService = require('../services/rolesService');
+const { isAuth } = require("../middlewares/authMiddleware");
 
-router.post('/add', async (req, res) => {
+router.post('/add', isAuth, async (req, res) => {
     try {
         const { roleName, description } = req.body
         await rolesService.add(roleName, description);
