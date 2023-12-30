@@ -26,3 +26,11 @@ exports.delete = async (id) => {
         WHERE id = ?
     `, [id]);
 }
+
+exports.edit = async (id, roleName, description) => {
+    await db.asyncRun(`
+        UPDATE roles
+        SET role_name = ?, description = ?
+        WHERE id = ?
+    `, [roleName, description, id]);
+}
