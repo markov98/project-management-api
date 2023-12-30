@@ -29,4 +29,14 @@ router.get('/:id', async (req, res) => {
     }
 })
 
+router.delete('/:id', isAuth, async (req, res) => {
+    try {
+        const { id } = req.params;
+        await rolesService.delete(id)
+        res.json('Role deleted');
+    } catch (err) {
+        res.status(404).json(err.message)
+    }
+})
+
 module.exports = router;
