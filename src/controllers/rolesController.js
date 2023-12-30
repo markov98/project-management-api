@@ -39,4 +39,15 @@ router.delete('/:id', isAuth, async (req, res) => {
     }
 })
 
+router.patch('/:id', isAuth, async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { roleName, description } = req.body;
+        await rolesService.edit(id, roleName, description)
+        res.json('Role Updated');
+    } catch (err) {
+        res.status(404).json(err.message)
+    }
+})
+
 module.exports = router;
