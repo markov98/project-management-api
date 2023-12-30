@@ -19,3 +19,10 @@ exports.getById = async (id) => {
         WHERE id = ?
     `, [id]);
 }
+
+exports.delete = async (id) => {
+    return await db.asyncRun(`
+        DELETE FROM roles
+        WHERE id = ?
+    `, [id]);
+}
