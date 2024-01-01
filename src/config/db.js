@@ -60,8 +60,24 @@ const createTables = (db) => {
 });
 };
 
+// Modified asyncRun to include changes and lastID
+const asyncRun = util.promisify((query, params, callback) => {
+    db.run(query, params, function (err) {
+        if (err) {
+            return callback(err, null);
+        }
+
+        const result = {
+            changes: this.changes,
+            lastID: this.lastID
+        };
+
+        callback(null, result);
+    });
+});
+
 const db = initializeDatabase();
-db.asyncRun = util.promisify(db.run);
+db.asyncRun = asyncRun;
 db.asyncGet = util.promisify(db.get);
 db.asyncAll = util.promisify(db.all);
 module.exports = db;

@@ -21,10 +21,14 @@ exports.getById = async (id) => {
 }
 
 exports.delete = async (id) => {
-    return await db.asyncRun(`
+    const result = await db.asyncRun(`
         DELETE FROM roles
         WHERE id = ?
     `, [id]);
+
+    if (result.changes <= 0) {
+        throw new Error('Role does not exist')
+    }
 }
 
 exports.edit = async (id, roleName, description) => {
