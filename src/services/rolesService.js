@@ -32,9 +32,13 @@ exports.delete = async (id) => {
 }
 
 exports.edit = async (id, roleName, description) => {
-    await db.asyncRun(`
+    const result = await db.asyncRun(`
         UPDATE roles
         SET role_name = ?, description = ?
         WHERE id = ?
     `, [roleName, description, id]);
+
+    if (result.changes <= 0) {
+        throw new Error('Role does not exist')
+    }
 }
