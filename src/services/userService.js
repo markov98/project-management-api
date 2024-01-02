@@ -7,14 +7,12 @@ const { SECRET } = require("../constants");
 exports.register = async (username, email, password) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    await db.asyncRun(`
+    const { lastID } = await db.asyncRun(`
         INSERT INTO users (username, email, password)
         VALUES (?, ?, ?)
     `, [username, email, hashedPassword]);
 
-    const { lastId } = await db.asyncGet('SELECT last_insert_rowid() as lastId');
-
-    const user = { id: lastId, email };
+    const user = { id: lastID, email };
     return getResult(user);
 };
 
