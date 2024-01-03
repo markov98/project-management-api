@@ -42,3 +42,15 @@ exports.edit = async (id, roleName, description) => {
         throw new Error('Role does not exist')
     }
 }
+
+exports.assignUser = async (roleId, userId) => {
+    const result = await db.asyncRun(`
+    UPDATE roles
+    SET assigned_user = ?
+    WHERE id = ?
+`, [userId, roleId]);
+
+    if (result.changes <= 0) {
+        throw new Error('Error!')
+    }
+}
