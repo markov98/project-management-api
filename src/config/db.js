@@ -49,7 +49,8 @@ const createTables = (db) => {
     CREATE TABLE roles (
         id INTEGER PRIMARY KEY,
         role_name TEXT NOT NULL UNIQUE,
-        description TEXT NOT NULL
+        description TEXT NOT NULL,
+        assigned_user INTEGER REFERENCES users(id)
     )
 `, (err) => {
     if (err) {
