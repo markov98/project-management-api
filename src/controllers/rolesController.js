@@ -50,4 +50,15 @@ router.patch('/:id', isAuth, async (req, res) => {
     }
 })
 
+router.patch('/:id/assign', isAuth, async (req, res) => {
+    try {
+        const roleId = req.params.id;
+        const userId = req.user._id
+        await rolesService.assignUser(roleId, userId)
+        res.json('User Assigned');
+    } catch (err) {
+        res.status(404).json(err.message)
+    }
+})
+
 module.exports = router;
