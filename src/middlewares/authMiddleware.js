@@ -1,12 +1,14 @@
 const jwt = require("jsonwebtoken");
 const { SECRET } = require("../constants");
 
-exports.auth = (req, res, next) => {
-  const token = req.header("X-Authorization");
+const revokedTokens = [];
 
-  if (token) {
+exports.auth = (req, res, next) => {
+  req.token = req.header("X-Authorization");
+
+  if (req.token && !revokedTokens.includes(req.token)) {
     try {
-      const decodedToken = jwt.verify(token, SECRET);
+      const decodedToken = jwt.verify(req.token, SECRET);
       req.user = decodedToken;
 
       next();
@@ -24,4 +26,8 @@ exports.isAuth = (req, res, next) => {
   } else {
       next()
   }
-}
+};
+
+exports.revokeToken = (token) => {
+  revokedTokens.push(token);
+};
