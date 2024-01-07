@@ -9,16 +9,9 @@ Make sure you have NodeJS installed. After you navigate to the project folder in
 
 The Base URL is **http://localhost:3030**
 
-### Users
+### Routes
 
-#### Login
-
-Go to **/users/login** and **POST** user data (email, password)
-
-#### Register
-
-Go to **/users/register** and **POST** user data (email, username, password)
-
-#### Logout
-
-Go to **/users/logout** and use method **GET** while logged-in
+#### Users
+1. **/login** 
+2. **/register**
+3. **/logout**
