@@ -12,6 +12,6 @@ The Base URL is **http://localhost:3030**
 ### Routes
 
 #### Users
-1. **/login** 
-2. **/register**
-3. **/logout**
+1. **/login**  - Method: **POST**;  Body: (email, password)
+2. **/register** - Method: **POST**;  Body: (email, username, password)
+3. **/logout** - Method: **GET**;  Headres: (X-Authentication: accessToken)
