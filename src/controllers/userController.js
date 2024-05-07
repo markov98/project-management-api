@@ -2,6 +2,17 @@ const router = require("express").Router();
 const userService = require('../services/userService');
 const { isAuth, revokeToken } = require('../middlewares/authMiddleware');
 
+router.get('/assigned-users', async (req, res) => {
+    try {
+        const result = await userService.getAssignedUsers();
+        res.json(result);
+    } catch (err) {
+        console.log(err);
+        res.status(500).json({ error: err.message });
+    }
+});
+
+
 router.post('/register', async (req, res) => {
     try {
         const { username, email, password } = req.body;

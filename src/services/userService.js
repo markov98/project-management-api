@@ -32,6 +32,13 @@ exports.login = async (email, password) => {
     return getResult(user);
 };
 
+exports.getAssignedUsers = async () => {
+    return await db.asyncGet(`
+        SELECT users.username, roles.role_name
+        FROM users
+        INNER JOIN roles ON users.id = roles.assigned_user;`)
+}
+
 function getResult(user) {
     const payload = { _id: user.id, email: user.email };
     const token = jwt.sign(payload, SECRET, { expiresIn: "1h" });
