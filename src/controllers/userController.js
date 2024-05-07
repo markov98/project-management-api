@@ -1,5 +1,4 @@
 const router = require("express").Router();
-const jwt = require("jsonwebtoken");
 const userService = require('../services/userService');
 const { isAuth, revokeToken } = require('../middlewares/authMiddleware');
 
@@ -28,6 +27,6 @@ router.post('/login', async (req, res) => {
 router.get("/logout", isAuth, (req, res) => {
     revokeToken(req.token);
     res.send("Logout successful!")
-  });
+});
 
 module.exports = router;
