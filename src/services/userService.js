@@ -33,10 +33,10 @@ exports.login = async (email, password) => {
 };
 
 exports.getAssignedUsers = async () => {
-    return await db.asyncGet(`
+    return await db.asyncAll(`
         SELECT users.username, roles.role_name
         FROM users
-        INNER JOIN roles ON users.id = roles.assigned_user;`)
+        INNER JOIN roles ON users.id = roles.assigned_user;`);
 }
 
 function getResult(user) {
