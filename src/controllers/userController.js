@@ -4,8 +4,7 @@ const { isAuth, revokeToken } = require('../middlewares/authMiddleware');
 
 router.get('/assigned-users', async (req, res) => {
     try {
-        const result = await userService.getAssignedUsers();
-        res.json(result);
+        res.json(await userService.getAssignedUsers());
     } catch (err) {
         console.log(err);
         res.status(500).json({ error: err.message });
