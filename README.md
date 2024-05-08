@@ -27,4 +27,4 @@ Route: **/roles**
     1. Method: **GET** - Returns a single role.
     2. Method: **PATCH**; Headers: (X-Authentication: accessToken); Body: (roleName, description) - Edits a role.
     3. Method: **DELETE**; Headers: (X-Authentication: accessToken); - Deletes a role.
-4. **/:roleId/assign** - Method: **PATCH**; Headers: (X-Authentication: accessToken); - Assignes the current user to a role.
+4. **/:roleId/assign** - Method: **PATCH**; Headers: (X-Authentication: accessToken); - Assigns the current user to a role.
