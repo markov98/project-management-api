@@ -17,14 +17,14 @@ Route: **/users**
 1. **/login**  - Method: **POST**; Body: (email, password)
 2. **/register** - Method: **POST**; Body: (email, username, password)
 3. **/logout** - Method: **GET**; Headers: (X-Authentication: accessToken)
-4. **/assigned-users** - Method: **GET**;
+4. **/assigned-users** - Method: **GET** - Returns all users with the role they are assigned to.
 
 #### Roles
 Route: **/roles**
-1. **/get-all** - Method: **GET**
+1. **/get-all** - Method: **GET** - Returns all roles.
 2. **/add** - Method: **POST**; Headers: (X-Authentication: accessToken); Body: (roleName, description)
 3. **/:roleId**
-    1. Method: **GET**
-    2. Method: **PATCH**; Headers: (X-Authentication: accessToken); Body: (roleName, description)
-    3. Method: **DELETE**; Headers: (X-Authentication: accessToken);
-4. **/:roleId/assign** - Method: **PATCH**; Headers: (X-Authentication: accessToken);
+    1. Method: **GET** - Returns a single role.
+    2. Method: **PATCH**; Headers: (X-Authentication: accessToken); Body: (roleName, description) - Edits a role.
+    3. Method: **DELETE**; Headers: (X-Authentication: accessToken); - Deletes a role.
+4. **/:roleId/assign** - Method: **PATCH**; Headers: (X-Authentication: accessToken); - Assignes the current user to a role.
