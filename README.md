@@ -17,6 +17,7 @@ Route: **/users**
 1. **/login**  - Method: **POST**; Body: (email, password)
 2. **/register** - Method: **POST**; Body: (email, username, password)
 3. **/logout** - Method: **GET**; Headers: (X-Authentication: accessToken)
+4. **/assigned-users** - Method: **GET**;
 
 #### Roles
 Route: **/roles**
