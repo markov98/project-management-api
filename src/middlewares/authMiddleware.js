@@ -1,33 +1,36 @@
-const jwt = require("jsonwebtoken");
-const { SECRET } = require("../constants");
+const jwt = require('jsonwebtoken');
+const { SECRET } = require('../constants');
 
 const revokedTokens = [];
 
 exports.auth = (req, res, next) => {
-  req.token = req.header("X-Authorization");
+  const authHeader = req.header('Authorization') || req.header('X-Authorization');
+  if (!authHeader) return next();
 
-  if (req.token && !revokedTokens.includes(req.token)) {
-    try {
-      const decodedToken = jwt.verify(req.token, SECRET);
-      req.user = decodedToken;
+  const token = authHeader.startsWith('Bearer ') ? authHeader.slice(7) : authHeader;
+  req.token = token;
 
-      next();
-    } catch (error) {
-      res.status(401).json({ message: "You are not authorized!" });
-    }
-  } else {
-    next();
+  if (revokedTokens.includes(token)) {
+    return res.status(401).json({ message: 'Token revoked' });
+  }
+
+  try {
+    const decodedToken = jwt.verify(token, SECRET);
+    req.user = decodedToken;
+    return next();
+  } catch (error) {
+    return res.status(401).json({ message: 'Invalid or expired token' });
   }
 };
 
 exports.isAuth = (req, res, next) => {
   if (!req.user) {
-    res.status(401).json({ message: "You are not authorized!" });
-  } else {
-      next()
+    return res.status(401).json({ message: 'You are not authorized!' });
   }
+  return next();
 };
 
 exports.revokeToken = (token) => {
+  if (!token) return;
   revokedTokens.push(token);
 };

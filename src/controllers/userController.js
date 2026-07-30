@@ -6,8 +6,9 @@ router.get('/assigned-users', async (req, res) => {
     try {
         res.json(await userService.getAssignedUsers());
     } catch (err) {
-        console.log(err);
-        res.status(500).json({ error: err.message });
+        console.error(err);
+        const status = err.status || 500;
+        res.status(status).json({ error: err.message || 'Internal Server Error' });
     }
 });
 
@@ -16,10 +17,11 @@ router.post('/register', async (req, res) => {
     try {
         const { username, email, password } = req.body;
         const result = await userService.register(username, email, password);
-        res.json(result)
+        res.status(201).json(result);
     } catch (err) {
-        console.log(err);
-        res.status(500).json({ error: err.message });
+        console.error(err);
+        const status = err.status || 500;
+        res.status(status).json({ error: err.message || 'Internal Server Error' });
     }
 });
 
@@ -27,10 +29,11 @@ router.post('/login', async (req, res) => {
     try {
         const { email, password } = req.body;
         const result = await userService.login(email, password);
-        res.json(result)
+        res.json(result);
     } catch (err) {
-        console.log(err);
-        res.status(500).json({ error: err.massage });
+        console.error(err);
+        const status = err.status || 500;
+        res.status(status).json({ error: err.message || 'Internal Server Error' });
     }
 });
 

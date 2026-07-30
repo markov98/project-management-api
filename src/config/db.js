@@ -31,7 +31,7 @@ const initializeDatabase = () => {
 // Tables will be created if they do not exist
 const createTables = (db) => {
     db.run(`
-        CREATE TABLE users (
+        CREATE TABLE IF NOT EXISTS users (
             id INTEGER PRIMARY KEY,
             username TEXT NOT NULL,
             email TEXT NOT NULL UNIQUE,
@@ -46,7 +46,7 @@ const createTables = (db) => {
     });
 
     db.run(`
-    CREATE TABLE roles (
+    CREATE TABLE IF NOT EXISTS roles (
         id INTEGER PRIMARY KEY,
         role_name TEXT NOT NULL UNIQUE,
         description TEXT NOT NULL,
@@ -61,26 +61,27 @@ const createTables = (db) => {
 });
 };
 
-// Modified asyncRun to include changes and lastID
-const asyncRun = util.promisify((query, params, callback) => {
-    db.run(query, params, function (err) {
-        if (err) {
-            return callback(err, null);
-        }
-
-        const result = {
-            changes: this.changes,
-            lastID: this.lastID
-        };
-
-        callback(null, result);
-    });
-});
-
 const db = initializeDatabase();
-db.asyncRun = asyncRun;
-db.asyncGet = util.promisify(db.get);
-db.asyncAll = util.promisify(db.all);
+
+// Provide promise-based helpers bound to the db instance
+db.asyncRun = (query, params = []) => {
+    return new Promise((resolve, reject) => {
+        db.run(query, params, function (err) {
+            if (err) return reject(err);
+
+            const result = {
+                changes: this.changes,
+                lastID: this.lastID
+            };
+
+            resolve(result);
+        });
+    });
+};
+
+db.asyncGet = util.promisify(db.get.bind(db));
+db.asyncAll = util.promisify(db.all.bind(db));
+
 module.exports = db;
 
 
