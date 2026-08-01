@@ -7,7 +7,7 @@ Make sure you have Node.js installed. After you navigate to the project folder i
 
 ## Features
 
-You can register, login, and logout. Logged-In users can add, delete, and edit roles, and they can assign themselves to a role.
+You can register, login, and logout. Logged-In users can add, delete, and edit roles, assign themselves to a role, and join teams.
 
 ### Routes
 Base URL: **http://localhost:3030**
@@ -28,3 +28,14 @@ Route: **/roles**
     2. Method: **PATCH**; Headers: (X-Authentication: accessToken); Body: (roleName, description) - Edits a role.
     3. Method: **DELETE**; Headers: (X-Authentication: accessToken); - Deletes a role.
 4. **/:roleId/assign** - Method: **PATCH**; Headers: (X-Authentication: accessToken); - Assigns the current user to a role.
+
+#### Teams
+Route: **/teams**
+1. **/** - Method: **GET** - Returns all teams with member counts.
+2. **/** - Method: **POST**; Headers: (Authorization: Bearer accessToken); Body: (name, description) - Creates a team.
+3. **/:teamId**
+    1. Method: **GET** - Returns a team and its members.
+    2. Method: **PATCH**; Headers: (Authorization: Bearer accessToken); Body: (name, description) - Edits a team.
+    3. Method: **DELETE**; Headers: (Authorization: Bearer accessToken); - Deletes a team and its memberships.
+4. **/:teamId/join** - Method: **POST**; Headers: (Authorization: Bearer accessToken); - Adds the current user to a team.
+5. **/:teamId/leave** - Method: **DELETE**; Headers: (Authorization: Bearer accessToken); - Removes the current user from a team.
