@@ -2,4 +2,3 @@ node_modules/
 src/db/project.db
  .env
  npm-debug.log
- .DS_Store
