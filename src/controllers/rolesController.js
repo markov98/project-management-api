@@ -2,19 +2,19 @@ const router = require("express").Router();
 const rolesService = require('../services/rolesService');
 const { isAuth } = require("../middlewares/authMiddleware");
 
-router.post('/add', isAuth, async (req, res) => {
+router.get('/', async (req, res) => {
     try {
-        const { roleName, description } = req.body
-        await rolesService.add(roleName, description);
-        res.send('Role added');
+        res.json(await rolesService.getAll());
     } catch (err) {
         res.status(404).json(err.message)
     }
 })
 
-router.get('/get-all', async (req, res) => {
+router.post('/', isAuth, async (req, res) => {
     try {
-        res.json(await rolesService.getAll());
+        const { roleName, description } = req.body
+        await rolesService.add(roleName, description);
+        res.send('Role added');
     } catch (err) {
         res.status(404).json(err.message)
     }

@@ -23,13 +23,13 @@ Route: **/users**
 
 #### Roles
 Route: **/roles**
-1. **/get-all** - Method: **GET** - Returns all roles.
-2. **/add** - Method: **POST**; Headers: (Authorization: Bearer accessToken); Body: (roleName, description)
-3. **/:roleId**
+1. **/** - Method: **GET** - Returns all roles.
+2. **/** - Method: **POST**; Headers: (Authorization: Bearer accessToken); Body: (roleName, description) - Creates a role.
+3. **/:id**
     1. Method: **GET** - Returns a single role.
     2. Method: **PATCH**; Headers: (Authorization: Bearer accessToken); Body: (roleName, description) - Edits a role.
     3. Method: **DELETE**; Headers: (Authorization: Bearer accessToken); - Deletes a role.
-4. **/:roleId/assign** - Method: **PATCH**; Headers: (Authorization: Bearer accessToken); - Assigns the current user to a role.
+4. **/:id/assign** - Method: **PATCH**; Headers: (Authorization: Bearer accessToken); - Assigns the current user to a role.
 
 #### Teams
 Route: **/teams**
