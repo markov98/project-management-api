@@ -60,24 +60,6 @@ const createTables = (db) => {
         console.log('Roles table created.');
     }
 });
-};
-
-const db = initializeDatabase();
-
-// Provide promise-based helpers bound to the db instance
-db.asyncRun = (query, params = []) => {
-    return new Promise((resolve, reject) => {
-        db.run(query, params, function (err) {
-            if (err) return reject(err);
-
-            const result = {
-                changes: this.changes,
-                lastID: this.lastID
-            };
-
-            resolve(result);
-        });
-    });
 
     db.run(`
         CREATE TABLE IF NOT EXISTS teams (
@@ -105,6 +87,24 @@ db.asyncRun = (query, params = []) => {
         } else {
             console.log('Team members table created.');
         }
+    });
+};
+
+const db = initializeDatabase();
+
+// Provide promise-based helpers bound to the db instance
+db.asyncRun = (query, params = []) => {
+    return new Promise((resolve, reject) => {
+        db.run(query, params, function (err) {
+            if (err) return reject(err);
+
+            const result = {
+                changes: this.changes,
+                lastID: this.lastID
+            };
+
+            resolve(result);
+        });
     });
 };
 
